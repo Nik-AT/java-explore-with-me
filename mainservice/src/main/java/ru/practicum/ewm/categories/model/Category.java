@@ -1,8 +1,10 @@
 package ru.practicum.ewm.categories.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -12,11 +14,12 @@ import java.util.Objects;
 @Entity
 @Table(name = "categories")
 @NoArgsConstructor
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
-    private String categoryName;
+    Long categoryId;
+    String categoryName;
 
 
     @Override

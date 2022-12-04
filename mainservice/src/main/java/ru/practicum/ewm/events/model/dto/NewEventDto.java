@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -17,10 +18,10 @@ import java.time.LocalDateTime;
 public class NewEventDto {
     @Length(min = 5, max = 250)
     private String title;
-    @NotNull
+    @NotBlank
     @Length(min = 10, max = 1000)
     private String annotation;
-    @NotNull
+    @NotBlank
     @Length(min = 20, max = 2000)
     private String description;
     @NotNull

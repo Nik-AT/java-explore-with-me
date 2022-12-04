@@ -22,6 +22,7 @@ public class UserRequestController {
                 .collect(Collectors.toList());
     }
 
+
     @PostMapping("/requests")
     public ParticipantRequestDto postNewRequest(@PathVariable Long userId,
                                                 @RequestParam Long eventId) {
