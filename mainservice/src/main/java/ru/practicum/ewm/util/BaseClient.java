@@ -1,11 +1,11 @@
 package ru.practicum.ewm.util;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.lang.Nullable;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 public class BaseClient {
 
@@ -27,11 +27,14 @@ public class BaseClient {
     private <T> ResponseEntity<Object> makeAndSendRequest(HttpMethod method, String path, @Nullable T body) {
         HttpEntity<T> requestEntity = null;
         if (body != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+            headers.setContentType(MediaType.APPLICATION_JSON);
             requestEntity = new HttpEntity<>(body);
         }
         ResponseEntity<Object> response;
         try {
-            response = template.exchange(path, method, requestEntity, Object.class);
+            response = template.exchange(path, method, requestEntity, Object.class, Object.class);
         } catch (HttpStatusCodeException e) {
             return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsByteArray());
         }
