@@ -202,3 +202,48 @@ CREATE TABLE IF NOT EXISTS requests
     event_id
 )
     );
+
+CREATE TABLE IF NOT EXISTS comments
+(
+    comment_id
+    BIGINT
+    GENERATED
+    BY
+    DEFAULT AS
+    IDENTITY
+    NOT
+    NULL,
+    user_id
+    BIGINT
+    NOT
+    NULL,
+    content
+    VARCHAR
+(
+    1000
+) NOT NULL,
+    event_id BIGINT NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+    CONSTRAINT comment_pk PRIMARY KEY
+(
+    comment_id
+),
+    CONSTRAINT author_fk FOREIGN KEY
+(
+    user_id
+) REFERENCES users
+(
+    user_id
+),
+    CONSTRAINT unique_content UNIQUE
+(
+    content
+),
+    CONSTRAINT comment_fk FOREIGN KEY
+(
+    event_id
+) REFERENCES events
+(
+    event_id
+)
+    );
