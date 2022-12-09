@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import ru.practicum.ewm.categories.CategoryRepository;
 import ru.practicum.ewm.categories.model.Category;
 import ru.practicum.ewm.categories.model.dto.CategoryDto;
+import ru.practicum.ewm.comments.model.CommentDto;
+import ru.practicum.ewm.comments.user.UserCommentsService;
 import ru.practicum.ewm.events.EventClient;
 import ru.practicum.ewm.events.EventRepository;
 import ru.practicum.ewm.events.model.dto.*;
@@ -29,6 +31,7 @@ public class EventMapper {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final EventClient client;
+    private final UserCommentsService commentsService;
 
     public Event dtoToEvent(Long userId, NewEventDto newEventDto) {
         if (!categoryRepository.existsById(newEventDto.getCategory()))
@@ -59,6 +62,7 @@ public class EventMapper {
         User user = getUserById(event.getInitiatorId());
         String uri = "/events/" + event.getEventId();
         Integer views = (Integer) client.getViews(uri);
+        List<CommentDto> comments = commentsService.getEventComments(event.getEventId());
 
         return EventDto.builder()
                 .id(event.getEventId())
@@ -77,6 +81,7 @@ public class EventMapper {
                 .requestModeration(event.isRequestModeration())
                 .state(event.getState())
                 .views(views.longValue())
+                .comments(comments)
                 .build();
     }
 

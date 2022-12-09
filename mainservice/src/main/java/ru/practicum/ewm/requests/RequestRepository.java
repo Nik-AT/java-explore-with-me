@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.practicum.ewm.requests.model.Request;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Long> {
@@ -17,4 +18,7 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     @Query("select r from Request r where r.requestorId = ?1")
     List<Request> findAllByRequestor_id(Long id);
+
+    @Query("select r from  Request r where r.eventId = ?1 and r.requestorId = ?2")
+    Optional<Request> findRequestByEvent_idAAndRequestor_id(Long eventId, Long requestorId);
 }

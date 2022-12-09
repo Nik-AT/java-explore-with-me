@@ -6,10 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.ewm.categories.model.dto.CategoryDto;
+import ru.practicum.ewm.comments.model.CommentDto;
 import ru.practicum.ewm.events.model.EventState;
 import ru.practicum.ewm.users.model.dto.UserShortDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -35,4 +37,5 @@ public class EventDto {
     private boolean requestModeration;
     private EventState state;
     private Long views;
+    private List<CommentDto> comments;
 }
